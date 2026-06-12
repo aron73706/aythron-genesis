@@ -1,0 +1,26 @@
+{
+  "tasks": [
+    {
+      "id": "T1",
+      "description": "Create the fibonacci.py script containing the fibonacci function",
+      "dependencies": [],
+      "assignee": "Worker",
+      "status": "completed",
+      "attempts": 1,
+      "output": "\nReasoning: I will implement an efficient iterative Fibonacci function in Python.\n[FILE: fibonacci.py]\n```python\ndef fibonacci(n: int) -> int:\n    \"\"\"Return the nth Fibonacci number iteratively.\"\"\"\n    if n < 0:\n        raise ValueError(\"n must be non-negative\")\n    if n == 0:\n        return 0\n    if n == 1:\n        return 1\n    \n    a, b = 0, 1\n    for _ in range(2, n + 1):\n        a, b = b, a + b\n    return b\n```\n",
+      "feedback": ""
+    },
+    {
+      "id": "T2",
+      "description": "Create a test_fibonacci.py script that asserts the output of fibonacci(10) is 55",
+      "dependencies": [
+        "T1"
+      ],
+      "assignee": "Worker",
+      "status": "completed",
+      "attempts": 1,
+      "output": "\nReasoning: I will write unit tests checking edge cases and the required fibonacci(10) == 55 check.\n[FILE: test_fibonacci.py]\n```python\nfrom fibonacci import fibonacci\n\ndef test_fibonacci():\n    assert fibonacci(0) == 0\n    assert fibonacci(1) == 1\n    assert fibonacci(5) == 5\n    assert fibonacci(10) == 55\n    print(\"All tests passed successfully!\")\n\nif __name__ == \"__main__\":\n    test_fibonacci()\n```\n",
+      "feedback": ""
+    }
+  ]
+}

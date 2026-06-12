@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aythron Genesis - Multi-Agent Orchestration Platform</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="glow-bg"></div>
+    <div class="app-container">
+        
+        <!-- Header -->
+        <header class="app-header">
+            <div class="logo-area">
+                <span class="logo-icon">&#10059;</span>
+                <h1>AYTHRON GENESIS</h1>
+                <span class="logo-sub">Multi-Agent AI Orchestration</span>
+            </div>
+            <div class="header-badges">
+                <div class="status-badge" id="system-status-badge">
+                    <span class="badge-dot"></span>
+                    <span class="badge-text" id="system-status-text">Idle</span>
+                </div>
+                <div class="status-badge provider-badge" id="provider-badge">
+                    <span class="badge-text" id="active-provider-text">Mock Mode</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Workspace Grid -->
+        <main class="workspace-grid">
+            
+            <!-- Left Panel: Control Center & Config -->
+            <section class="panel control-panel">
+                <div class="panel-header">
+                    <h2>Control Center</h2>
+                    <span class="panel-icon">&#9881;</span>
+                </div>
+                <div class="panel-body">
+                    <!-- Config Form -->
+                    <div class="config-section">
+                        <h3>LLM Provider Settings</h3>
+                        <div class="input-group">
+                            <label for="provider-select">Provider Type</label>
+                            <select id="provider-select">
+                                <option value="mock">Mock Sandbox (Immediate)</option>
+                                <option value="ollama">Local Ollama API</option>
+                            </select>
+                        </div>
+                        <div class="input-group ollama-onlyhidden" id="ollama-host-group" style="display: none;">
+                            <label for="ollama-host">Ollama Host</label>
+                            <input type="text" id="ollama-host" value="http://localhost:11434">
+                        </div>
+                        <div class="input-group ollama-onlyhidden" id="ollama-model-group" style="display: none;">
+                            <label for="ollama-model">Active Model</label>
+                            <input type="text" id="ollama-model" value="qwen2.5:7b">
+                        </div>
+                        <button id="save-config-btn" class="btn btn-secondary">Save Configuration</button>
+                    </div>
+
+                    <!-- Goal Submission Form -->
+                    <div class="goal-section">
+                        <h3>Submit Objective</h3>
+                        <div class="input-group">
+                            <label for="goal-input">Platform Goal</label>
+                            <textarea id="goal-input" placeholder="e.g., Implement an iterative Fibonacci script and write unit tests..."></textarea>
+                        </div>
+                        <button id="run-goal-btn" class="btn btn-primary">
+                            <span class="btn-text">Execute Genesis Loop</span>
+                            <span class="spinner" id="run-spinner"></span>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Center Canvas: Active Agents Graph & Tasks -->
+            <section class="panel canvas-panel">
+                <div class="panel-header">
+                    <h2>Agent Coordination Map</h2>
+                    <span class="panel-icon">&#9788;</span>
+                </div>
+                <div class="panel-body canvas-body">
+                    <!-- Dynamic Agent Nodes -->
+                    <div class="agents-graph">
+                        <div class="agent-node" id="node-manager">
+                            <div class="node-icon">&#9733;</div>
+                            <div class="node-name">Manager</div>
+                            <div class="node-status">Idle</div>
+                        </div>
+                        <div class="graph-link link-m-to-p"></div>
+                        
+                        <div class="agent-node" id="node-planner">
+                            <div class="node-icon">&#9998;</div>
+                            <div class="node-name">Planner</div>
+                            <div class="node-status">Idle</div>
+                        </div>
+                        <div class="graph-link link-p-to-w"></div>
+                        
+                        <div class="agent-node" id="node-worker">
+                            <div class="node-icon">&#9884;</div>
+                            <div class="node-name">Worker</div>
+                            <div class="node-status">Idle</div>
+                        </div>
+                        <div class="graph-link link-w-to-r"></div>
+                        
+                        <div class="agent-node" id="node-reviewer">
+                            <div class="node-icon">&#10004;</div>
+                            <div class="node-name">Reviewer</div>
+                            <div class="node-status">Idle</div>
+                        </div>
+                        <div class="graph-link link-r-to-m"></div>
+                    </div>
+
+                    <!-- Live Task Board -->
+                    <div class="task-board-section">
+                        <h3>Decomposed Task State</h3>
+                        <div id="tasks-list-container" class="tasks-list-container">
+                            <div class="no-tasks">No goal active. Submit a goal to see execution steps.</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Right Panel: Persistent Memory Editor -->
+            <section class="panel memory-panel">
+                <div class="panel-header">
+                    <h2>Memory Explorer</h2>
+                    <span class="panel-icon">&#128190;</span>
+                </div>
+                <div class="panel-body memory-body">
+                    <div class="memory-tabs">
+                        <button class="tab-btn active" data-tab="project_state.json">Project State</button>
+                        <button class="tab-btn" data-tab="roadmap.md">Roadmap</button>
+                        <button class="tab-btn" data-tab="decisions.md">Decisions</button>
+                        <button class="tab-btn" data-tab="session_log.md">Session Log</button>
+                        <button class="tab-btn" data-tab="context.md">Context</button>
+                    </div>
+                    <div class="memory-content-area">
+                        <textarea id="memory-editor" readonly></textarea>
+                        <div class="editor-footer">
+                            <span class="editor-status" id="editor-status-text">Ready-only Mode</span>
+                            <button id="save-memory-btn" class="btn btn-secondary" style="display: none;">Save Changes</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- Bottom Panel: Execution Output Terminal -->
+        <footer class="app-terminal">
+            <div class="terminal-header">
+                <div class="terminal-title">
+                    <span class="term-icon">&#62;_</span>
+                    <h2>Execution Console</h2>
+                </div>
+                <button id="clear-logs-btn" class="btn-text-only">Clear Output</button>
+            </div>
+            <div class="terminal-body" id="terminal-logs">
+                <div class="log-line system-line">[SYSTEM] Aythron Genesis ready. Configure your environment and click "Execute Genesis Loop" to begin.</div>
+            </div>
+        </footer>
+
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

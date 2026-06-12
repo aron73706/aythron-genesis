@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  aythron-genesis:
+    build: .
+    container_name: aythron_genesis
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    environment:
+      - HOST=0.0.0.0
+      - PORT=8000
+      - OLLAMA_HOST=http://host.docker.internal:11434
+      - DEFAULT_MODEL=qwen2.5:7b
+      - PLANNER_MODEL=qwen2.5:7b
+      - WORKER_MODEL=qwen2.5:7b
+      - REVIEWER_MODEL=qwen2.5:7b
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    restart: unless-stopped
